@@ -1,7 +1,7 @@
-import { AppointmentNew } from "./components/appointment/AppointmentNew"
+import { Chat } from "./components/chat/Chat.jsx"
 
 const routes = [
-    { path: '/', element: <AppointmentNew /> },
+    { path: '/', element: <Chat /> },
 ]
 
 export default routes
