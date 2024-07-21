@@ -1,7 +1,9 @@
-import { AppointmentNew } from "./components/appointment/AppointmentNew"
+import { Login } from "./pages/AuthPage/Auth";
+import Dashboard from "./pages/DashboardPage/Dashboard";
 
 const routes = [
-    { path: '/', element: <AppointmentNew /> },
-]
+    { path: '/', element: <Login /> },
+    { path: '/dashboard', element: <Dashboard /> },
+];
 
-export default routes
+export default routes;
