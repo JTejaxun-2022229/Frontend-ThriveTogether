@@ -1,0 +1,55 @@
+/* supporters.css */
+.supporters-management {
+    padding: 20px;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007acc;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.supporters-table {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.supporters-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.supporters-table th,
+.supporters-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.supporters-table th {
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.supporters-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.supporter-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}

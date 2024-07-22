@@ -1,0 +1,95 @@
+.auth-container {
+    margin-top: 250px;
+    margin-bottom: 250px;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.register-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 1500px;
+    height: 1300px;
+}
+
+.auth-form {
+    display: flex;
+    gap: 1rem;
+}
+
+.auth-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo-container img {
+    width: 300px;
+    margin-right: 1rem;
+}
+
+.logo-separator {
+    display: flex;
+    margin: 20px 0;
+    height: 2px;
+    width: 100%;
+    background-color: #000000;
+}
+
+.input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.input-container .input-field {
+    flex: 1;
+    min-width: 100px;
+}
+
+.vices-container {
+    
+    margin-top: 1rem;
+}
+
+.vices-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.vice-button {
+    border: 1px solid #ddd;
+    background-color: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.vice-button.active {
+    border-color: #007bff;
+    color: #00ffee;
+}
+
+.vice-button:hover {
+    background-color: #00f2ff;
+    color: #fff;
+}
+
+button[disabled] {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.auth-form-switch-label {
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+    color: #007bff;
+    cursor: pointer;
+}

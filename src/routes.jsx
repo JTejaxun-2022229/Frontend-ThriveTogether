@@ -8,7 +8,7 @@ const routes = [
     {path: '/dashboard', element: <DashboardPage/>, children:[
         { path: 'home', element: <Hero/> },
         { path: 'appointment', element: <AppointmentNew /> },
-        
+        { path: 'chat', element: <AppointmentNew /> },
     ]}
 
 ]
