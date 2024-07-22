@@ -12,9 +12,9 @@ export const useGetForum = (forumId) => {
 
             const result = await getForo(forumId);
 
-            if (result.error) {
+            if(result.error){
                 setError(result.message);
-            } else {
+            }else{
                 setForum(result.forum);
             }
 

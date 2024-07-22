@@ -5,12 +5,12 @@ export const useAddCommentForo = () => {
     const [error, setError] = useState(null);
 
     const addComment = async (title, username, text, setForum) => {
-        try {
+        try{
             const result = await useAddComment(title, username, text);
 
-            if (result.error) {
+            if(result.error){
                 setError(result.message);
-            } else {
+            }else{
                 setForum(prevForum => ({
                     ...prevForum,
                     comentaries: [...prevForum.comentaries, {
@@ -20,7 +20,7 @@ export const useAddCommentForo = () => {
                     }]
                 }));
             }
-        } catch (e) {
+        }catch(e){
             setError(e.message);
         }
     };
