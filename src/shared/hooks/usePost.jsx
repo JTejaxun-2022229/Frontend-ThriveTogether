@@ -1,19 +1,19 @@
-import { useState } from 'react';
+/* import { useState } from 'react';
 import axios from 'axios';
 
 export const usePost = () => {
   const [loading, setLoading] = useState(false);
 
-  const createPost = async (title, description) => {
+  const createPost = async (formData) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5100/thriveTogether/v1/post',
-        { title, description },
+        'http://localhost:5100/thrive/v1/post',
+        formData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${token}`,
           },
         }
@@ -27,4 +27,4 @@ export const usePost = () => {
   };
 
   return { createPost, loading };
-};
+}; */

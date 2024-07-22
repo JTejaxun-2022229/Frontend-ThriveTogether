@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: monospace;
     background-color: rgb(0, 0, 0);
     display: flex;
@@ -57,10 +57,10 @@ body {
 }
 
 .button {
-    align-self: flex-end; /* Mueve el botón al final del contenedor */
-}
+    align-self: flex-end; /* Mueve el botón al final del contenedor 
+} */
 
-.pushable {
+/* .pushable {
     position: relative;
     background: transparent;
     padding: 0px;
@@ -146,3 +146,7 @@ body {
 .pushable:focus:not(:focus-visible) {
     outline: none;
 }
+
+.first-container input[type="file"] {
+    margin-bottom: 15px;
+} */
