@@ -64,3 +64,17 @@ h2{
     background-color: #f0f0f0;
     border: 1px solid #ccc;
 }
+
+.back-button {
+    background-color: #f0f0f0;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.back-button:hover {
+    background-color: #000;
+    color: #f0f0f0;
+}

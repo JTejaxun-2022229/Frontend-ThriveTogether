@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useGetForum } from '../hooks/useGetForum';
 import { useAddCommentForo } from '../hooks/useAddCommentForo';
 
@@ -12,15 +12,21 @@ export const Foro = () => {
     const { addComment, error: addCommentError } = useAddCommentForo();
     const [newComment, setNewComment] = useState('');
     const [username, setUsername] = useState('');
+    const navigate = useNavigate();
 
     const handleNewComment = async () => {
         if (forum && forum.title) {
             await addComment(forum.title, username, newComment);
             setNewComment('');
             setUsername('');
+            window.location.reload();
         } else {
             setAddCommentError("Forum title is missing.");
         }
+    };
+
+    const volver = () => {
+        navigate('/');
     };
 
     if (loading) return <div>Loading...</div>;
@@ -32,6 +38,7 @@ export const Foro = () => {
 
     return(
         <div className='discord2'>
+            <button onClick={volver} className="back-button">Back</button>
             <h2>{forum.title}</h2>
             <div className="chat-window">
                 {forum.comentaries && forum.comentaries.length > 0 ? (
