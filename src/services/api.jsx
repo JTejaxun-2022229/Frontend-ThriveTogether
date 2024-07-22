@@ -55,3 +55,14 @@ export const createPost = async (data) => {
     };
   }
 };
+
+export const getPosts = async () => {
+  try {
+    return await apiClient.get('/post/getPost');
+  } catch (e) {
+    return {
+      error: true,
+      e
+    };
+  }
+};

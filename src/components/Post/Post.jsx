@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Input } from "../Input.jsx"; 
-import { usePost } from '../../shared/hooks';
+import { usePost, useFetchPosts } from '../../shared/hooks'; // Importar los hooks necesarios
 import './post.css';
 
 export const Post = () => {
   const { createPost, isLoading } = usePost();
+  const { posts, isLoading: isLoadingPosts, error } = useFetchPosts();
   const [formState, setFormState] = useState({
     title: {
       value: "",
@@ -73,41 +74,58 @@ export const Post = () => {
         <h1>POST</h1>
         <hr />
       </div>
-      <div className='first-container'>
-        <Input
-          field='title'
-          label='Title'
-          value={formState.title.value}
-          onChangeHandler={handleInputValueChange}
-          type='text'
-          onBlurHandler={handleInputValidationOnBlur}
-          showErrorMessage={formState.title.showError}
-          validationMessage='Title is required'
-        />
-        <Input
-          field='description'
-          textarea='Description'
-          value={formState.description.value}
-          onChangeHandler={handleInputValueChange}
-          type='text'
-          onBlurHandler={handleInputValidationOnBlur}
-          showErrorMessage={formState.description.showError}
-          validationMessage='Description is required'
-        />
-        <label htmlFor="photo">Image</label>
-        <input
-          type="file"
-          id="photo"
-          onChange={handleImageChange}
-        />
-        <div className='button'>
-          <button className="pushable" onClick={handleSubmit} disabled={isSubmitButtonDisabled}>
-            <span className="shadow"></span>
-            <span className="edge"></span>
-            <span className="front">ADD</span>
-          </button>
+      <div className='content-container'>
+        <div className='first-container'>
+          <Input
+            field='title'
+            label='Title'
+            value={formState.title.value}
+            onChangeHandler={handleInputValueChange}
+            type='text'
+            onBlurHandler={handleInputValidationOnBlur}
+            showErrorMessage={formState.title.showError}
+            validationMessage='Title is required'
+          />
+          <Input
+            field='description'
+            textarea='Description'
+            value={formState.description.value}
+            onChangeHandler={handleInputValueChange}
+            type='text'
+            onBlurHandler={handleInputValidationOnBlur}
+            showErrorMessage={formState.description.showError}
+            validationMessage='Description is required'
+          />
+          <label htmlFor="photo">Image</label>
+          <input
+            type="file"
+            id="photo"
+            onChange={handleImageChange}
+          />
+          <div className='button'>
+            <button className="pushable" onClick={handleSubmit} disabled={isSubmitButtonDisabled}>
+              <span className="shadow"></span>
+              <span className="edge"></span>
+              <span className="front">ADD</span>
+            </button>
+          </div>
+          {message && <p>{message}</p>}
         </div>
-        {message && <p>{message}</p>}
+        <div className='posts-container'>
+          {isLoadingPosts ? (
+            <p>Loading posts...</p>
+          ) : error ? (
+            <p>Error loading posts: {error.message}</p>
+          ) : (
+            posts.map((post) => (
+              <div className='post-card' key={post._id}>
+                <h3>{post.title}</h3>
+                <p>{post.description}</p>
+                {post.photo && <img src={post.photo} alt={post.title} />}
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
