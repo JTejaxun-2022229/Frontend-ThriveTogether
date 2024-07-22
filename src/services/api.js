@@ -96,3 +96,68 @@ export const getSupporters = async () => {
     }
 
 };
+
+export const getAllNotes = async () => {
+
+    try {
+        return await apiClient.get('/note/all');
+    } catch (e) {
+        return {
+            error: true,
+            e
+        }
+    }
+
+};
+
+export const getNotesByCreator = async () => {
+
+    try {
+        return await apiClient.get('/note/creator');
+    } catch (e) {
+        return {
+            error: true,
+            e
+        }
+    }
+    
+};
+
+export const createNote = async (data) => {
+
+    try {
+        return await apiClient.post('/note/create', data);
+    } catch (e) {
+        return {
+            error: true,
+            e
+        }
+    }
+    
+};
+
+export const updateNote = async (id, data) => {
+
+    try {
+        return await apiClient.put(`/note/update/${id}`, data);
+    } catch (e) {
+        return {
+            error: true,
+            e
+        }
+    }
+    
+};
+
+export const deleteNote = async (id) => {
+
+    try {
+        return await apiClient.delete(`/note/delete/${id}`);
+    } catch (e) {
+        return {
+            error: true,
+            e
+        }
+    }
+    
+};
