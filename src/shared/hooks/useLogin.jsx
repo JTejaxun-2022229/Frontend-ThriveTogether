@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { login as loginRequest } from "../../services/api"
+import { login as loginRequest, authenticate} from "../../services/api"
 import toast from "react-hot-toast"
 
 export const useLogin = () => {
@@ -11,10 +11,20 @@ export const useLogin = () => {
     const login = async(email, password) =>{
         setIsLoading(true)
 
+        const authResponse = await authenticate({ email: email });
+        
+        if (authResponse.error) {
+            setIsLoading(false);
+            return toast.error(
+                authResponse.e?.response?.data || 'Ocurrió un error al autenticar'
+            );
+        }
+
         const response = await loginRequest({
             email,
             password
         })
+        
 
         setIsLoading(false)
         if(response.error){

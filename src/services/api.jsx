@@ -32,6 +32,22 @@ export const login = async (data) => {
     }
 }
 
+export const authenticate = async (data) => {
+    try {
+        const response = await axios.put(
+            "https://api.chatengine.io/users/",
+            { username: data.email, secret: data.email, first_name: data.email },
+            { headers: { "private-key": "4a07a1a5-c960-4b64-969b-fa3c49e40635" } }
+        );
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            e
+        };
+    }
+};
+
 export const register = async (data) => {
     try{
         return await apiClient.post('/auth/register', data)
