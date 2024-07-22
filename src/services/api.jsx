@@ -18,11 +18,12 @@ export const getForo = async (forumId) => {
     }
 };
 
-export const useAddComment = async (forumId, username, text) => {
+export const useAddComment = async (forumTitle, username, text) => {
     try {
-        const response = await apiClient.put(`/forums/${forumId}/comment`, {
+        const response = await apiClient.put('/forum/addMessage', {
+            title: forumTitle,
             user: username,
-            text: text,
+            text: text
         });
         return response.data;
     } catch (e) {
