@@ -1,44 +1,24 @@
 import React, { useState } from 'react';
-import { useChats } from '../../shared/hooks';
-import { useMessages } from '../../shared/hooks';
-import { Message } from '../message/Message.jsx';
+import { ChatEngineWrapper, Socket, ChatList, ChatFeed } from 'react-chat-engine-advanced';
 
-export const Chat = ({ currentUser, selectedUser }) => {
-  const { chats, isFetching: isFetchingChats } = useChats();
-  const { messages, sendMessage, isFetching: isFetchingMessages } = useMessages(selectedUser?.chatId);
-  const [newMessage, setNewMessage] = useState('');
+const projectID = 'YOUR_PROJECT_ID';
+const userName = 'YOUR_USER_NAME';
+const userSecret = 'YOUR_USER_SECRET';
 
-  const handleSendMessage = () => {
-    if (newMessage.trim() === '') return;
-    sendMessage({
-      receptor: selectedUser._id,
-      emisor: currentUser._id,
-      content: newMessage,
-      chatId: selectedUser.chatId
-    });
-    setNewMessage('');
-  };
-
-  if (isFetchingChats || isFetchingMessages) {
-    return <div>Loading...</div>;
-  }
+export const Chat = () => {
+  const [activeChat, setActiveChat] = useState(null);
 
   return (
-    <div className="chat-container">
-      <div className="messages">
-        {messages.map((message) => (
-          <Message key={message.messageId} message={message} />
-        ))}
+    <ChatEngineWrapper>
+      <Socket 
+        projectID={projectID}
+        userName={userName}
+        userSecret={userSecret}
+      />
+      <div style={{ display: 'flex' }}>
+        <ChatList onChatClick={(chat) => setActiveChat(chat.id)} />
+        <ChatFeed activeChat={activeChat} />
       </div>
-      <div className="message-input">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-        />
-        <button onClick={handleSendMessage}>Send</button>
-      </div>
-    </div>
+    </ChatEngineWrapper>
   );
 };
