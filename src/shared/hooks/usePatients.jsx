@@ -1,4 +1,3 @@
-// hooks/usePatients.js
 import { useEffect, useState } from 'react';
 import { getPatients } from '../../services/api';
 
