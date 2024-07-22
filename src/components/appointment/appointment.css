@@ -92,6 +92,9 @@
     border-radius: 10px;
   }
 
+  .time-slot:active{
+    background-color: rgb(185, 185, 185);
+  }
   .arrow-button {
     background: none;
     border: none;

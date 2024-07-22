@@ -1,9 +1,10 @@
-import { Login } from "./pages/AuthPage/Auth";
-import { Dashboard } from "./pages/DashboardPage/Dashboard";
+import { Dashboard } from "./pages/DashboardPage";
+import { Auth } from "./pages/auth";
 
 const routes = [
-    { path: '/', element: <Login /> },
-    { path: '/dashboard', element: <Dashboard /> },
-];
 
-export default routes;
+    { path: '/', element: <Auth /> },
+    { path: '/dashboard', element: <Dashboard /> }
+]
+
+export default routes

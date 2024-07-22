@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./appointment.css";
 import { Input } from "../Input";
 
+
 export const AppointmentNew = () => {
   const [date, setDate] = useState(new Date());
+
   const [formData, setFormData] = useState({
     note: {
       value: "",
@@ -14,6 +15,7 @@ export const AppointmentNew = () => {
       showError: false,
     },
   });
+
 
   const availableTimes = [
     "09:00 AM",
