@@ -1,77 +1,114 @@
-/* import React, { useState } from 'react';
-import { usePost } from '../hooks/usePost.jsx';
+import React, { useState } from 'react';
+import { Input } from "../Input.jsx"; 
+import { usePost } from '../../shared/hooks';
 import './post.css';
 
-const Post = () => {
-  const { createPost } = usePost();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+export const Post = () => {
+  const { createPost, isLoading } = usePost();
+  const [formState, setFormState] = useState({
+    title: {
+      value: "",
+      isValid: false,
+      showError: false,
+    },
+    description: {
+      value: "",
+      isValid: false,
+      showError: false,
+    },
+    image: null,
+  });
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    if (image) {
-      formData.append('photo', image);
-    }
-
-    const result = await createPost(formData);
-    if (result.success) {
-      setMessage('Post creado exitosamente');
-    } else {
-      setMessage('Error al crear el post');
-    }
+  const handleInputValueChange = (value, field) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      [field]: {
+        ...prevState[field],
+        value,
+      },
+    }));
   };
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    setFormState((prevState) => ({
+      ...prevState,
+      image: e.target.files[0],
+    }));
   };
 
+  const handleInputValidationOnBlur = (value, field) => {
+    let isValid = value.trim() !== "";
+    setFormState((prevState) => ({
+      ...prevState,
+      [field]: {
+        ...prevState[field],
+        isValid,
+        showError: !isValid
+      },
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      title: formState.title.value,
+      description: formState.description.value,
+      photo: formState.image,
+    };
+
+    const result = await createPost(data);
+    if (result.error) {
+      setMessage('Error al crear el post');
+    } else {
+      setMessage('Post creado exitosamente');
+    }
+  };
+
+  const isSubmitButtonDisabled = isLoading || !formState.title.isValid || !formState.description.isValid;
+
   return (
-    <div>
-      <div className='body-container'>
-        <div className='title'>
-          <h1>POST</h1>
-          <hr />
+    <div className='body-container'>
+      <div className='title'>
+        <h1>POST</h1>
+        <hr />
+      </div>
+      <div className='first-container'>
+        <Input
+          field='title'
+          label='Title'
+          value={formState.title.value}
+          onChangeHandler={handleInputValueChange}
+          type='text'
+          onBlurHandler={handleInputValidationOnBlur}
+          showErrorMessage={formState.title.showError}
+          validationMessage='Title is required'
+        />
+        <Input
+          field='description'
+          textarea='Description'
+          value={formState.description.value}
+          onChangeHandler={handleInputValueChange}
+          type='text'
+          onBlurHandler={handleInputValidationOnBlur}
+          showErrorMessage={formState.description.showError}
+          validationMessage='Description is required'
+        />
+        <label htmlFor="photo">Image</label>
+        <input
+          type="file"
+          id="photo"
+          onChange={handleImageChange}
+        />
+        <div className='button'>
+          <button className="pushable" onClick={handleSubmit} disabled={isSubmitButtonDisabled}>
+            <span className="shadow"></span>
+            <span className="edge"></span>
+            <span className="front">ADD</span>
+          </button>
         </div>
-        <div className='first-container'>
-          <label htmlFor="title">Title</label>
-          <input
-            className='input'
-            placeholder='Please put the title here'
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            placeholder='Please put the description here'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-          <label htmlFor="photo">Image</label>
-          <input
-            type="file"
-            id="photo"
-            onChange={handleImageChange}
-          />
-          <div className='button'>
-            <button className="pushable" onClick={handleSubmit}>
-              <span className="shadow"></span>
-              <span className="edge"></span>
-              <span className="front">ADD</span>
-            </button>
-          </div>
-          {message && <p>{message}</p>}
-        </div>
+        {message && <p>{message}</p>}
       </div>
     </div>
   );
 };
-
-export default Post; */

@@ -1,30 +1,27 @@
-/* import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import { createPost as createPostRequest } from "../../services/api";
+import toast from "react-hot-toast";
 
 export const usePost = () => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const createPost = async (formData) => {
-    setLoading(true);
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        'http://localhost:5100/thrive/v1/post',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        }
+  const createPost = async (data) => {
+    setIsLoading(true);
+
+    const response = await createPostRequest(data);
+
+    setIsLoading(false);
+    if (response.error) {
+      return toast.error(
+        response.e?.response?.data || 'Error al crear el post'
       );
-      setLoading(false);
-      return { success: true, data: response.data };
-    } catch (error) {
-      setLoading(false);
-      return { success: false, error: error.response.data };
     }
+
+    toast.success('Post creado exitosamente');
   };
 
-  return { createPost, loading };
-}; */
+  return {
+    createPost,
+    isLoading
+  };
+};

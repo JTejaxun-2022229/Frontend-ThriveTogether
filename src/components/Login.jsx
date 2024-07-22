@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import logoThrive from "../assets/img/thriveTogether.png"
 import { Input } from "./Input.jsx";
