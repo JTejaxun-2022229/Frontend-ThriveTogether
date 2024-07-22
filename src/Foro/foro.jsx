@@ -15,23 +15,23 @@ export const Foro = () => {
     const navigate = useNavigate();
 
     const handleNewComment = async () => {
-        if (forum && forum.title) {
+        if(forum && forum.title) {
             await addComment(forum.title, username, newComment);
             setNewComment('');
             setUsername('');
             window.location.reload();
-        } else {
+        }else{
             setAddCommentError("Forum title is missing.");
         }
     };
 
     const volver = () => {
-        navigate('/');
+        navigate('/forums');
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (fetchError) return <div>Error: {fetchError}</div>;
-    if (!forum) return <div>No forum found</div>;
+    if(loading) return <div>Loading...</div>;
+    if(fetchError) return <div>Error: {fetchError}</div>;
+    if(!forum) return <div>No forum found</div>;
 
     console.log(forum)
     console.log('Forum title:', forum ? forum.title : 'No forum object');
