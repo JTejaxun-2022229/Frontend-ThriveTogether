@@ -1,4 +1,6 @@
 .auth-container {
+    margin-top: 250px;
+    margin-bottom: 250px;
     justify-content: center;
     height: 100vh;
     background-color: #f0f0f0;
@@ -8,9 +10,9 @@
     background: #fff;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     width: 1500px;
-    height: 1000px;
+    height: 1300px;
 }
 
 .auth-form {
