@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useNotes } from '../hooks/useNotes';
+import { Navbar } from "../../components/Navbar";
+import { useNotes } from '../../shared/hooks/useNotes';
+import { useUserDetails } from "../../shared/hooks/useUserDetails";
 import './notes.css';
 
-const NoteList = () => {
+export const NoteList = () => {
 
     const { notes, loading, error } = useNotes();
+    const {username} = useUserDetails();
 
     return (
         <div className="note-list">
+            <Navbar user={username} />
             <h1>Lista de Notas</h1>
             {loading && <p>Cargando...</p>}
             {error && <p>Error al cargar las notas.</p>}
@@ -18,7 +22,7 @@ const NoteList = () => {
                             <h2>{note.title}</h2>
                             <p>{note.body}</p>
                             <small>Creado por: {note.creatorUserId.name}</small>
-                            <small>Dirigido a: {note.notedUserId.name}</small>
+                            <small> || Acerca de: {note.notedUserId.name}</small>
                         </li>
                     ))}
                 </ul>
@@ -27,4 +31,3 @@ const NoteList = () => {
     );
 };
 
-export default NoteList;

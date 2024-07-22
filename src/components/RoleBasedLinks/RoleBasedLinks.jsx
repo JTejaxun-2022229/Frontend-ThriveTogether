@@ -9,8 +9,8 @@ export const RoleBasedLinks = () => {
         case "ADMIN_ROLE":
           return (
             <>
-              <a href="#">Admin Dashboard</a>
-              <a href="#">Admin Settings</a>
+              <a href="/users">Usuarios</a>
+              <a href="/notes">Notas</a>
               <div className="logout-container">
                 <input onClick={logout} type="button" value="Logout" />
               </div>

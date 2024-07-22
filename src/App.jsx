@@ -1,21 +1,13 @@
-import React from 'react';
-import { useRoutes } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import routes from './routes';
-import { useUser } from './shared/hooks/useUser';
+import { useRoutes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import routes from "./routes.jsx";
 
-const App = () => {
-
-  const { user } = useUser();
-  const routing = useRoutes(routes);
-
+export const App = () => {
+  let element = useRoutes(routes);
   return (
-
-    <div>
-      {user && <Navbar user={user} />}
-      {routing}
-    </div>
+    <>
+      {element}
+      <Toaster position="top-center" reverseOrder={true}/>
+    </>
   );
 };
-
-export default App;

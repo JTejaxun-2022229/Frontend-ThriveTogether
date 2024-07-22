@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Navbar } from "../../components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { useUsers } from '../../shared/hooks/useUsers';
+import { useUserDetails } from "../../shared/hooks/useUserDetails";
 import './user.css';
 
 export const UserManagement = () => {
 
     const navigate = useNavigate();
     const { users, loading, error } = useUsers();
+    const {username} = useUserDetails();
 
     const handleCreateUser = () => {
 
@@ -23,26 +26,28 @@ export const UserManagement = () => {
                 {loading && <p>Cargando...</p>}
                 {error && <p>Error al cargar los usuarios.</p>}
                 {!loading && !error && (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.map((user) => (
-                                <tr key={user.id}>
-                                    <td>{user.id}</td>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.role}</td>
+                    Array.isArray(users) && users.length > 0 ? (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Username</th>
+                                    <th>Rol</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {users.map((user) => (
+                                    <tr key={user.id}>
+                                        <td>{user.name}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.role}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <p>No hay usuarios disponibles.</p>
+                    )
                 )}
             </div>
         </div>

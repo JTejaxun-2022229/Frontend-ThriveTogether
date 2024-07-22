@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './notes.css';
 
 const NoteCreator = () => {
+  
   const { notes, loading, error } = useCreatorNotes();
   const navigate = useNavigate();
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllNotes } from '../services/noteService';
+import { getAllNotes } from '../../services/api';
 
 export const useNotes = () => {
 
@@ -18,7 +18,7 @@ export const useNotes = () => {
 
                 setError(err);
             } finally {
-                
+
                 setLoading(false);
             }
         };

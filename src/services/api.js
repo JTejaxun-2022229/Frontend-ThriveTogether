@@ -2,6 +2,7 @@ import axios from "axios";
 import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
+
     baseURL: 'http://127.0.0.1:5100/thrive/v1',
     timeout: 5000
 })
@@ -9,19 +10,21 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
 
     (config) => {
-        const userDetails = localStorage.getItem('user')
 
-        if (userDetails) {
-            const token = JSON.parse(userDetails).token
-            config.headers.Authorization = `Bearer ${token}`
+        let token = localStorage.getItem('token');
+
+        if (token) {
+            token = token.replace(/^"|"$/g, '');
+            config.headers.Authorization = `Bearer ${token}`;
         }
-        return config
+
+        return config;
     },
     (e) => {
-        return Promise.reject(e)
-    }
-)
 
+        return Promise.reject(e);
+    }
+);
 export const login = async (data) => {
 
     try {
@@ -49,12 +52,13 @@ export const register = async (data) => {
 export const getUsers = async () => {
 
     try {
-        return await apiClient.get('/user');
+        const response = await apiClient.get('/user');
+        return response.data.users;
     } catch (e) {
         return {
             error: true,
             e
-        }
+        };
     }
 };
 
@@ -120,7 +124,7 @@ export const getNotesByCreator = async () => {
             e
         }
     }
-    
+
 };
 
 export const createNote = async (data) => {
@@ -133,7 +137,7 @@ export const createNote = async (data) => {
             e
         }
     }
-    
+
 };
 
 export const updateNote = async (id, data) => {
@@ -146,7 +150,7 @@ export const updateNote = async (id, data) => {
             e
         }
     }
-    
+
 };
 
 export const deleteNote = async (id) => {
@@ -159,5 +163,5 @@ export const deleteNote = async (id) => {
             e
         }
     }
-    
+
 };
