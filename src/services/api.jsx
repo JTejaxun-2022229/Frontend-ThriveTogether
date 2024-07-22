@@ -5,6 +5,15 @@ const apiClient = axios.create({
     timeout: 5000
 })
 
+export const createForum = async (forumData) => {
+    try {
+        const response = await apiClient.post('/forum', forumData);
+        return response.data;
+    } catch (e) {
+        return { error: true, message: e.message };
+    }
+};
+
 export const getForo = async (forumId) => {
     try {
         const response = await apiClient.get(`/forum/${forumId}`);
