@@ -27,7 +27,7 @@ export const useLogin = () => {
 
         localStorage.setItem('token', JSON.stringify(token))
 
-        navigate('/')
+        navigate('/dashboard')
     }
     return {
         login,

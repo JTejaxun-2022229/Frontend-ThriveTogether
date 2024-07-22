@@ -3,7 +3,7 @@ import { AuthPage } from "./pages/auth";
 import {AppointmentNew} from "./components/appointment/AppointmentNew.jsx"
 
 const routes = [
-    {path: '/auth', element: <AuthPage/>},
+    {path: '/*', element: <AuthPage/>},
     {path: '/dashboard', element: <DashboardPage/>, children:[
         { path: 'appointment', element: <AppointmentNew /> },
     ]}
