@@ -14,9 +14,13 @@ export const Foro = () => {
     const [username, setUsername] = useState('');
 
     const handleNewComment = async () => {
-        await addComment(id, username, newComment, forum);
-        setNewComment('');
-        setUsername('');
+        if (forum && forum.title) {
+            await addComment(forum.title, username, newComment);
+            setNewComment('');
+            setUsername('');
+        } else {
+            setAddCommentError("Forum title is missing.");
+        }
     };
 
     if (loading) return <div>Loading...</div>;
