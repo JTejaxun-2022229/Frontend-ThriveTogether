@@ -3,9 +3,7 @@ import { AuthPage } from "./pages/auth/AuthPage";
 import { Register } from "./pages/RegisterPage/Register";
 import { AppointmentNew } from "./components/appointment/AppointmentNew.jsx"
 
-
 const routes = [
-
     { path: '/', element: <AuthPage /> },
     { path: '/register', element: <Register /> },
     {
