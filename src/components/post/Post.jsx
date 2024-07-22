@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input } from "../Input.jsx";
-import { usePost, useFetchPosts } from '../../shared/hooks'; // Importar los hooks necesarios
+import { usePost, useFetchPosts } from '../../shared/hooks';
 import './post.css';
 
 export const Post = () => {

@@ -7,19 +7,19 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
     (config) => {
-      let token = localStorage.getItem('token');
-  
-      if (token) {
-        token = token.replace(/^"|"$/g, '');
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
+        let token = localStorage.getItem('token');
+
+        if (token) {
+            token = token.replace(/^"|"$/g, '');
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
     },
     (e) => {
-      return Promise.reject(e);
+        return Promise.reject(e);
     }
-  );
-  
+);
+
 
 export const login = async (data) => {
     try {
@@ -62,14 +62,29 @@ export const authenticate = async (data) => {
 export const getUsers = async () => {
 
     try {
-        return await apiClient.get('/user');
+        const response = await apiClient.get('/user');
+        return response.data.users;
     } catch (e) {
         return {
             error: true,
             e
-        }
+        };
     }
 };
+
+export const getUserProfile = async () => {
+
+    try {
+        const response = await apiClient.get('/user/profile');
+        return response.data.user;
+    } catch (e) {
+        return {
+            error: true,
+            e
+        };
+    }
+};
+
 
 export const getPatients = async () => {
 
@@ -176,25 +191,68 @@ export const deleteNote = async (id) => {
 
 export const createPost = async (data) => {
     try {
-      console.log(data);
-      return await apiClient.post('/post/newPost', data);
+        console.log(data);
+        return await apiClient.post('/post/newPost', data);
     } catch (e) {
-      console.error("Error creating post:", e.response ? e.response.data : e.message);
-      return {
-        error: true,
-        e
-      };
+        console.error("Error creating post:", e.response ? e.response.data : e.message);
+        return {
+            error: true,
+            e
+        };
     }
-  };
-  
-  export const getPosts = async () => {
-    try {
-      return await apiClient.get('/post/getPost');
-    } catch (e) {
-      return {
-        error: true,
-        e
-      };
-    }
-  };
+};
 
+export const getPosts = async () => {
+    try {
+        return await apiClient.get('/post/getPost');
+    } catch (e) {
+        return {
+            error: true,
+            e
+        };
+    }
+};
+
+export const createForum = async (forumData) => {
+    try {
+        const response = await apiClient.post('/forum', forumData);
+        return response.data;
+    } catch (e) {
+        return { error: true, message: e.message };
+    }
+};
+
+export const getForums = async () => {
+    try {
+        const response = await apiClient.get('/forum');
+        return response.data;
+    } catch (error) {
+        return { error: true, message: error.message };
+    }
+};
+
+export const getForo = async (forumId) => {
+    try {
+        const response = await apiClient.get(`/forum/${forumId}`);
+        console.log('API response data:', response.data);
+        return response.data;
+    } catch (error) {
+        return {
+            error: true,
+            message: error.response?.data?.msg || error.message
+        };
+    }
+};
+
+export const useAddComment = async (forumTitle, username, text) => {
+    try {
+        const response = await apiClient.put('/forum/addMessage', {
+            title: forumTitle,
+            user: username,
+            text: text
+        });
+        return response.data;
+    } catch (e) {
+        return { error: true, message: e.message };
+    }
+};

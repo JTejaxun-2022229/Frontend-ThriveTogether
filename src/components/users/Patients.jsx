@@ -1,7 +1,8 @@
-// Patients.js
 import React, { useState } from 'react';
 import { usePatients } from '../../shared/hooks/usePatients';
 import { updatePatientProgress } from '../../services/api';
+import { Navbar } from "../../components/Navbar";
+import { useUserDetails } from "../../shared/hooks/useUserDetails";
 import './patients.css';
 
 export const Patients = () => {
@@ -9,6 +10,7 @@ export const Patients = () => {
     const { patients, loading, error } = usePatients();
     const [editing, setEditing] = useState(null);
     const [progress, setProgress] = useState({});
+    const { username } = useUserDetails();
 
     const handleEdit = (id, currentProgress) => {
 
@@ -29,6 +31,7 @@ export const Patients = () => {
 
     return (
         <div className="patients-management">
+            <Navbar user={username} />
             <div className="header">
                 <h1>Gestión de Pacientes</h1>
             </div>
@@ -39,8 +42,7 @@ export const Patients = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
+                                <th>Username</th>
                                 <th>Progreso</th>
                                 <th>Foto</th>
                                 <th>Acciones</th>
@@ -49,7 +51,6 @@ export const Patients = () => {
                         <tbody>
                             {patients.map((patient) => (
                                 <tr key={patient.id}>
-                                    <td>{patient.id}</td>
                                     <td>{patient.username}</td>
                                     <td>
                                         {editing === patient.id ? (
@@ -81,4 +82,3 @@ export const Patients = () => {
         </div>
     );
 };
-

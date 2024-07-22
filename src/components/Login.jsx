@@ -100,9 +100,6 @@ export const Login = ({ switchAuthHandler }) => {
                     Log in
                 </button>
             </form>
-            <span onClick={switchAuthHandler} className="auth-form-switch-label">
-                ¿Aún no tienes una cuenta? ¡Regístrate...!
-            </span>
         </div>
     </div>
   );

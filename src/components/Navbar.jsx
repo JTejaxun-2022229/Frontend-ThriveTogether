@@ -21,7 +21,8 @@ export const Navbar = ({ user }) => {
         <div className="navbar-center">
           <button onClick={() => navigate("/dashboard/home")}>Home</button>
           <button onClick={() => navigate("/dashboard/chat")}>Chat</button>
-          <button onClick={() => navigate("/dashboard/post")}>Posts</button>
+          {/* <button onClick={() => navigate("/dashboard/postUser")}>Posts</button> */}
+          <button onClick={() => navigate("/dashboard/forums/")}>Forum</button>
         </div>
         <div className="navbar-right">
           <div className="dropdown">

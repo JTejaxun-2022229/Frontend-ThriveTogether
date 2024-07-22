@@ -7,8 +7,7 @@ import { registerValidationMessages, validateRegister } from '../../shared/valid
 import './register.css';
 
 export const Register = ({ switchAuthHandler }) => {
-
-    const { registerUser, isLoading } = useRegister();
+    const { register, isLoading } = useRegister();
     const navigate = useNavigate();
 
     const [formState, setFormState] = useState({
@@ -21,7 +20,6 @@ export const Register = ({ switchAuthHandler }) => {
     });
 
     const handleInputChange = (value, field) => {
-
         setFormState((prevState) => ({
             ...prevState,
             [field]: {
@@ -32,7 +30,6 @@ export const Register = ({ switchAuthHandler }) => {
     };
 
     const handleValidationOnBlur = (value, field) => {
-
         const isValid = validateRegister(field, value);
         setFormState((prevState) => ({
             ...prevState,
@@ -45,7 +42,6 @@ export const Register = ({ switchAuthHandler }) => {
     };
 
     const handleVicesToggle = (vice) => {
-
         setFormState((prevState) => {
             const newVices = prevState.vices.value.includes(vice)
                 ? prevState.vices.value.filter((v) => v !== vice)
@@ -62,7 +58,6 @@ export const Register = ({ switchAuthHandler }) => {
     };
 
     const handleRegister = (event) => {
-
         event.preventDefault();
         const userData = {
             name: formState.name.value,
@@ -73,7 +68,7 @@ export const Register = ({ switchAuthHandler }) => {
             vices: formState.vices.value,
         };
 
-        registerUser(userData);
+        register(userData);
     };
 
     const isSubmitDisabled = isLoading || !Object.values(formState).every((field) => field.isValid);
@@ -146,7 +141,7 @@ export const Register = ({ switchAuthHandler }) => {
                     <div className="vices-container">
                         <label>Vices</label>
                         <div className="vices-buttons">
-                            {['Tabaquismo', 'Alcoholismo', 'Drogadiccion', 'Medicamentos'].map((vice) => (
+                            {['Tabaquismo', 'Alcoholismo', 'Drogadiccion', 'Medicamentos', 'Apuestas'].map((vice) => (
                                 <button
                                     type="button"
                                     key={vice}
