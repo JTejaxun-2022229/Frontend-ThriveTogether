@@ -8,9 +8,11 @@ import {
   validatePassword,
 } from "../shared/validators";
 import { useLogin } from "../shared/hooks";
+import { useNavigate } from 'react-router-dom';
 
 export const Login = ({ switchAuthHandler, onLoginSuccess }) => {
   const { login, isLoading } = useLogin();
+  const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
     email: {
@@ -104,7 +106,7 @@ export const Login = ({ switchAuthHandler, onLoginSuccess }) => {
             Log in
           </button>
         </form>
-        <span onClick={switchAuthHandler} className="auth-form-switch-label">
+        <span onClick={() => navigate('/register')} className="auth-form-switch-label">
           ¿Aún no tienes una cuenta? ¡Regístrate...!
         </span>
       </div>

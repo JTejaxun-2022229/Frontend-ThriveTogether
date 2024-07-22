@@ -1,51 +1,34 @@
-/* eslint-disable react/prop-types */
+import React from 'react';
 
 export const Input = ({
     field,
     label,
     value,
     onChangeHandler,
-    type,
+    onBlurHandler,
+    type = 'text',
     showErrorMessage,
     validationMessage,
-    onBlurHandler,
-    textarea,
-    disabled
 }) => {
-    const handleValueChange = (event) => {
-        onChangeHandler(event.target.value, field)
-    }
+    const handleBlur = (event) => {
+        onBlurHandler(event.target.value, field);
+    };
 
-    const handleInputBlur = (event) => {
-        onBlurHandler(event.target.value, field)
-    }
+    const handleChange = (event) => {
+        onChangeHandler(event.target.value, field);
+    };
 
-  return (
-    <>
-        <div className="auth-form-label">
-            <span>{label}</span>
-        </div>
-        {textarea ? (
-            <textarea
-                type={type}
-                value={value}
-                onChange={handleValueChange}
-                onBlur={handleInputBlur}
-                rows={5}
-                style={{maxWidth: '400px'}}
-            />
-        ) : (
+    return (
+        <div className="input-container">
+            <label htmlFor={field}>{label}</label>
             <input
+                id={field}
                 type={type}
                 value={value}
-                onChange={handleValueChange}
-                onBlur={handleInputBlur}
-                disabled={disabled}
+                onChange={handleChange}
+                onBlur={handleBlur}
             />
-        )}
-        <span className="auth-form-validations-message">
-            {showErrorMessage && validationMessage}
-        </span>
-    </>
-  )
-}
+            {showErrorMessage && <span className="error-message">{validationMessage}</span>}
+        </div>
+    );
+};

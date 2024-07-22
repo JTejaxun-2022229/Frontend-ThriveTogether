@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import { Input } from './Input';
-import { registerValidationMessages, validateRegister } from '../shared/validators';
-import { useRegister } from '../shared/hooks';
-import logoThrive from '../assets/img/thriveTogether.png';
+import { Input } from '../../components/Input';
+import { useRegister } from '../../shared/hooks/useRegister';
+import { useNavigate } from 'react-router-dom';
+import logoThrive from '../../assets/img/thriveTogether.png';
+import { registerValidationMessages, validateRegister } from '../../shared/validators/index';
+import './register.css';
 
 export const Register = ({ switchAuthHandler }) => {
 
     const { registerUser, isLoading } = useRegister();
+    const navigate = useNavigate();
 
     const [formState, setFormState] = useState({
         name: { value: '', isValid: false, showError: false },
         username: { value: '', isValid: false, showError: false },
         email: { value: '', isValid: false, showError: false },
         password: { value: '', isValid: false, showError: false },
-        description: { value: '', isValid: true, showError: false },
         photo: { value: '', isValid: true, showError: false },
         vices: { value: [], isValid: true, showError: false },
     });
 
     const handleInputChange = (value, field) => {
-
         setFormState((prevState) => ({
             ...prevState,
             [field]: {
@@ -30,7 +31,6 @@ export const Register = ({ switchAuthHandler }) => {
     };
 
     const handleValidationOnBlur = (value, field) => {
-
         const isValid = validateRegister(field, value);
         setFormState((prevState) => ({
             ...prevState,
@@ -43,7 +43,6 @@ export const Register = ({ switchAuthHandler }) => {
     };
 
     const handleVicesToggle = (vice) => {
-
         setFormState((prevState) => {
             const newVices = prevState.vices.value.includes(vice)
                 ? prevState.vices.value.filter((v) => v !== vice)
@@ -60,14 +59,12 @@ export const Register = ({ switchAuthHandler }) => {
     };
 
     const handleRegister = (event) => {
-        
         event.preventDefault();
         const userData = {
             name: formState.name.value,
             username: formState.username.value,
             email: formState.email.value,
             password: formState.password.value,
-            description: formState.description.value,
             photo: formState.photo.value,
             vices: formState.vices.value,
         };
@@ -78,11 +75,11 @@ export const Register = ({ switchAuthHandler }) => {
     const isSubmitDisabled = isLoading || !Object.values(formState).every((field) => field.isValid);
 
     return (
-        <div className="register-container">
-            <div className="register-right">
-                <form className="auth-form">
+        <div className="auth-container">
+            <div className="register-container">
+                <form className="auth-form" onSubmit={handleRegister}>
                     <div className="auth-logo-container">
-                        <img src={logoThrive} height={150} />
+                        <img src={logoThrive} alt="Thrive Together Logo" />
                         <div>
                             <h1>Thrive Together</h1>
                         </div>
@@ -92,9 +89,9 @@ export const Register = ({ switchAuthHandler }) => {
                         field='name'
                         label='Name'
                         value={formState.name.value}
-                        onChangeHandler={handleInputChange}
+                        onChangeHandler={(value) => handleInputChange(value, 'name')}
                         type='text'
-                        onBlurHandler={handleValidationOnBlur}
+                        onBlurHandler={(value) => handleValidationOnBlur(value, 'name')}
                         showErrorMessage={formState.name.showError}
                         validationMessage={registerValidationMessages.name}
                     />
@@ -102,9 +99,9 @@ export const Register = ({ switchAuthHandler }) => {
                         field='username'
                         label='Username'
                         value={formState.username.value}
-                        onChangeHandler={handleInputChange}
+                        onChangeHandler={(value) => handleInputChange(value, 'username')}
                         type='text'
-                        onBlurHandler={handleValidationOnBlur}
+                        onBlurHandler={(value) => handleValidationOnBlur(value, 'username')}
                         showErrorMessage={formState.username.showError}
                         validationMessage={registerValidationMessages.username}
                     />
@@ -112,9 +109,9 @@ export const Register = ({ switchAuthHandler }) => {
                         field='email'
                         label='Email'
                         value={formState.email.value}
-                        onChangeHandler={handleInputChange}
+                        onChangeHandler={(value) => handleInputChange(value, 'email')}
                         type='text'
-                        onBlurHandler={handleValidationOnBlur}
+                        onBlurHandler={(value) => handleValidationOnBlur(value, 'email')}
                         showErrorMessage={formState.email.showError}
                         validationMessage={registerValidationMessages.email}
                     />
@@ -122,24 +119,17 @@ export const Register = ({ switchAuthHandler }) => {
                         field='password'
                         label='Password'
                         value={formState.password.value}
-                        onChangeHandler={handleInputChange}
+                        onChangeHandler={(value) => handleInputChange(value, 'password')}
                         type='password'
-                        onBlurHandler={handleValidationOnBlur}
+                        onBlurHandler={(value) => handleValidationOnBlur(value, 'password')}
                         showErrorMessage={formState.password.showError}
                         validationMessage={registerValidationMessages.password}
-                    />
-                    <Input
-                        field='description'
-                        label='Description'
-                        value={formState.description.value}
-                        onChangeHandler={handleInputChange}
-                        type='text'
                     />
                     <Input
                         field='photo'
                         label='Photo URL'
                         value={formState.photo.value}
-                        onChangeHandler={handleInputChange}
+                        onChangeHandler={(value) => handleInputChange(value, 'photo')}
                         type='text'
                     />
                     <div className="vices-container">
@@ -157,11 +147,11 @@ export const Register = ({ switchAuthHandler }) => {
                             ))}
                         </div>
                     </div>
-                    <button onClick={handleRegister} disabled={isSubmitDisabled}>
+                    <button type="submit" disabled={isSubmitDisabled}>
                         Register
                     </button>
                 </form>
-                <span onClick={switchAuthHandler} className="auth-form-switch-label">
+                <span onClick={() => navigate('/')} className="auth-form-switch-label">
                     ¿Ya tienes una cuenta? ¡Inicia sesión...!
                 </span>
             </div>
