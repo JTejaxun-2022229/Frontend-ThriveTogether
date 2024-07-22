@@ -3,7 +3,7 @@ import { Input } from '../../components/Input';
 import { useCreateUser } from '../../shared/hooks/useCreateUser';
 import { useNavigate } from 'react-router-dom';
 import logoThrive from '../../assets/img/thriveTogether.png';
-import { registerValidationMessages, validateRegister } from '../../services/api';
+import { registerValidationMessages, validateRegister } from '../../shared/validators';
 import './createUser.css';
 
 export const CreateUser = () => {
@@ -34,11 +34,9 @@ export const CreateUser = () => {
     };
 
     const handleValidationOnBlur = (value, field) => {
-
+        
         const isValid = validateRegister(field, value);
-
         setFormState((prevState) => ({
-
             ...prevState,
             [field]: {
                 ...prevState[field],
@@ -51,9 +49,7 @@ export const CreateUser = () => {
     const handleCreateUser = (event) => {
 
         event.preventDefault();
-
         const userData = {
-
             name: formState.name.value,
             username: formState.username.value,
             email: formState.email.value,
@@ -62,8 +58,10 @@ export const CreateUser = () => {
             description: formState.description.value,
             role: formState.role.value,
         };
+        createUser(userData).then(() => {
 
-        createUser(userData);
+            navigate('/dashboard');
+        });
     };
 
     const isSubmitDisabled = isLoading || !Object.values(formState).every((field) => field.isValid);
@@ -146,7 +144,6 @@ export const CreateUser = () => {
                                 id="role"
                                 value={formState.role.value}
                                 onChange={(e) => handleInputChange(e.target.value, 'role')}
-                                disabled
                             >
                                 <option value="SUPPORTER_ROLE">Supporter</option>
                                 <option value="ADMIN_ROLE">Admin</option>

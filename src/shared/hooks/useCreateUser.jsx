@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createUser as createUserAPI } from '../services/api';
+import { register as createUserAPI } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 export const useCreateUser = () => {

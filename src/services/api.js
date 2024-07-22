@@ -62,6 +62,19 @@ export const getUsers = async () => {
     }
 };
 
+export const getUserProfile = async () => {
+
+    try {
+        const response = await apiClient.get('/user/profile');
+        return response.data.user;
+    } catch (e) {
+        return {
+            error: true,
+            e
+        };
+    }
+};
+
 export const getPatients = async () => {
 
     try {
