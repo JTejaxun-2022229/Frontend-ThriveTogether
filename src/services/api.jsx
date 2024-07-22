@@ -6,20 +6,29 @@ const apiClient = axios.create({
 })
 
 export const createForum = async (forumData) => {
-    try {
+    try{
         const response = await apiClient.post('/forum', forumData);
         return response.data;
-    } catch (e) {
+    }catch(e){
         return { error: true, message: e.message };
     }
 };
 
+export const getForums = async () => {
+    try{
+        const response = await apiClient.get('/forum');
+        return response.data;
+    }catch (error) {
+        return { error: true, message: error.message };
+    }
+};
+
 export const getForo = async (forumId) => {
-    try {
+    try{
         const response = await apiClient.get(`/forum/${forumId}`);
         console.log('API response data:', response.data);
         return response.data;
-    } catch (error) {
+    }catch (error){
         return {
             error: true,
             message: error.response?.data?.msg || error.message
@@ -28,14 +37,14 @@ export const getForo = async (forumId) => {
 };
 
 export const useAddComment = async (forumTitle, username, text) => {
-    try {
+    try{
         const response = await apiClient.put('/forum/addMessage', {
             title: forumTitle,
             user: username,
             text: text
         });
         return response.data;
-    } catch (e) {
+    }catch (e){
         return { error: true, message: e.message };
     }
 };
