@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const Input = ({
+
     field,
     label,
     value,
@@ -10,11 +11,14 @@ export const Input = ({
     showErrorMessage,
     validationMessage,
 }) => {
+
     const handleBlur = (event) => {
+
         onBlurHandler(event.target.value, field);
     };
 
     const handleChange = (event) => {
+
         onChangeHandler(event.target.value, field);
     };
 

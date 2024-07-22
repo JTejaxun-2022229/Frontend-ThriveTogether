@@ -1,7 +1,5 @@
 .auth-container {
-    display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
 }
@@ -11,12 +9,13 @@
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 1500px;
+    height: 1000px;
 }
 
 .auth-form {
     display: flex;
-    flex-direction: column;
+    gap: 1rem;
 }
 
 .auth-logo-container {
@@ -27,24 +26,38 @@
 }
 
 .auth-logo-container img {
-    width: 50px;
+    width: 300px;
     margin-right: 1rem;
 }
 
 .logo-separator {
-    height: 1px;
-    background-color: #ddd;
-    margin: 1rem 0;
+    display: flex;
+    margin: 20px 0;
+    height: 2px;
+    width: 100%;
+    background-color: #000000;
+}
+
+.input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.input-container .input-field {
+    flex: 1;
+    min-width: 100px;
 }
 
 .vices-container {
+    
     margin-top: 1rem;
 }
 
 .vices-buttons {
     display: flex;
-    flex-wrap: wrap;
     gap: 0.5rem;
+    justify-content: center;
 }
 
 .vice-button {
@@ -58,11 +71,11 @@
 
 .vice-button.active {
     border-color: #007bff;
-    color: #007bff;
+    color: #00ffee;
 }
 
 .vice-button:hover {
-    background-color: #007bff;
+    background-color: #00f2ff;
     color: #fff;
 }
 

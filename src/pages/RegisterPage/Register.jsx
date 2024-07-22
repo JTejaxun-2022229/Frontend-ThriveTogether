@@ -7,7 +7,6 @@ import { registerValidationMessages, validateRegister } from '../../shared/valid
 import './register.css';
 
 export const Register = ({ switchAuthHandler }) => {
-
     const { registerUser, isLoading } = useRegister();
     const navigate = useNavigate();
 
@@ -85,57 +84,64 @@ export const Register = ({ switchAuthHandler }) => {
                         </div>
                     </div>
                     <div className="logo-separator"></div>
-                    <Input
-                        field='name'
-                        label='Name'
-                        value={formState.name.value}
-                        onChangeHandler={(value) => handleInputChange(value, 'name')}
-                        type='text'
-                        onBlurHandler={(value) => handleValidationOnBlur(value, 'name')}
-                        showErrorMessage={formState.name.showError}
-                        validationMessage={registerValidationMessages.name}
-                    />
-                    <Input
-                        field='username'
-                        label='Username'
-                        value={formState.username.value}
-                        onChangeHandler={(value) => handleInputChange(value, 'username')}
-                        type='text'
-                        onBlurHandler={(value) => handleValidationOnBlur(value, 'username')}
-                        showErrorMessage={formState.username.showError}
-                        validationMessage={registerValidationMessages.username}
-                    />
-                    <Input
-                        field='email'
-                        label='Email'
-                        value={formState.email.value}
-                        onChangeHandler={(value) => handleInputChange(value, 'email')}
-                        type='text'
-                        onBlurHandler={(value) => handleValidationOnBlur(value, 'email')}
-                        showErrorMessage={formState.email.showError}
-                        validationMessage={registerValidationMessages.email}
-                    />
-                    <Input
-                        field='password'
-                        label='Password'
-                        value={formState.password.value}
-                        onChangeHandler={(value) => handleInputChange(value, 'password')}
-                        type='password'
-                        onBlurHandler={(value) => handleValidationOnBlur(value, 'password')}
-                        showErrorMessage={formState.password.showError}
-                        validationMessage={registerValidationMessages.password}
-                    />
-                    <Input
-                        field='photo'
-                        label='Photo URL'
-                        value={formState.photo.value}
-                        onChangeHandler={(value) => handleInputChange(value, 'photo')}
-                        type='text'
-                    />
+                    <div className="input-container">
+                        <Input
+                            className="input-field"
+                            field='name'
+                            label='Name'
+                            value={formState.name.value}
+                            onChangeHandler={(value) => handleInputChange(value, 'name')}
+                            type='text'
+                            onBlurHandler={(value) => handleValidationOnBlur(value, 'name')}
+                            showErrorMessage={formState.name.showError}
+                            validationMessage={registerValidationMessages.name}
+                        />
+                        <Input
+                            className="input-field"
+                            field='username'
+                            label='Username'
+                            value={formState.username.value}
+                            onChangeHandler={(value) => handleInputChange(value, 'username')}
+                            type='text'
+                            onBlurHandler={(value) => handleValidationOnBlur(value, 'username')}
+                            showErrorMessage={formState.username.showError}
+                            validationMessage={registerValidationMessages.username}
+                        />
+                        <Input
+                            className="input-field"
+                            field='email'
+                            label='Email'
+                            value={formState.email.value}
+                            onChangeHandler={(value) => handleInputChange(value, 'email')}
+                            type='text'
+                            onBlurHandler={(value) => handleValidationOnBlur(value, 'email')}
+                            showErrorMessage={formState.email.showError}
+                            validationMessage={registerValidationMessages.email}
+                        />
+                        <Input
+                            className="input-field"
+                            field='password'
+                            label='Password'
+                            value={formState.password.value}
+                            onChangeHandler={(value) => handleInputChange(value, 'password')}
+                            type='password'
+                            onBlurHandler={(value) => handleValidationOnBlur(value, 'password')}
+                            showErrorMessage={formState.password.showError}
+                            validationMessage={registerValidationMessages.password}
+                        />
+                        <Input
+                            className="input-field"
+                            field='photo'
+                            label='Photo URL'
+                            value={formState.photo.value}
+                            onChangeHandler={(value) => handleInputChange(value, 'photo')}
+                            type='text'
+                        />
+                    </div>
                     <div className="vices-container">
                         <label>Vices</label>
                         <div className="vices-buttons">
-                            {['smoking', 'drinking', 'gambling', 'other'].map((vice) => (
+                            {['Tabaquismo', 'Alcoholismo', 'Drogadiccion', 'Medicamentos', 'Apuestas'].map((vice) => (
                                 <button
                                     type="button"
                                     key={vice}
