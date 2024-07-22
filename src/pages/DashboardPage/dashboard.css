@@ -1,17 +1,42 @@
 .dashboard-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    background: #a0e7e5;
     height: 100vh;
-    background: #2c3e50;
-    color: #fff;
+    color: #333;
+}
+
+.navbar {
+    width: 100%;
 }
 
 .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 20px;
+    width: 100%;
     text-align: center;
 }
 
 .dashboard-logo {
     width: 150px;
     margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #007acc;
+}
+
+p {
+    font-size: 1.2rem;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.5;
+    color: #007acc;
 }

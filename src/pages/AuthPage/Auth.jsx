@@ -14,7 +14,11 @@ export const Login = () => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
-        await login({ email, password });
+        const success = await login({ email, password });
+        if (success) {
+
+            navigate('/dashboard');
+        }
     };
 
     const handleRegister = () => {
@@ -23,6 +27,7 @@ export const Login = () => {
     };
 
     return (
+
         <div className="login-container">
             <div className="login-box">
                 <img src={logo} alt="Logo" className="logo" />
@@ -31,7 +36,7 @@ export const Login = () => {
                     <div className="form-group">
                         <input
                             type="text"
-                            placeholder="Email o nombre de usuario"
+                            placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required

@@ -12,19 +12,29 @@ apiClient.interceptors.request.use(
         const userDetails = localStorage.getItem('user');
         if (userDetails) {
             const token = JSON.parse(userDetails).token;
-            config.headers.Authorization = `${token}`;
+            config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
     (e) => Promise.reject(e)
 );
 
-
 export const login = async (data) => {
 
     try {
 
         return await apiClient.post('/auth/login', data);
+    } catch (e) {
+
+        return { error: true, e };
+    }
+};
+
+export const registerUser = async (data) => {
+
+    try {
+
+        return await apiClient.post('/auth/register', data);
     } catch (e) {
 
         return { error: true, e };

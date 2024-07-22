@@ -1,13 +1,16 @@
 import React from 'react';
 import { useUser } from '../../shared/hooks/useUser';
+import { Navbar } from '../../components/Navbar';
 import logo from '../../assets/image/thriveTogether.png';
 import './dashboard.css';
 
-const Dashboard = () => {
+export const Dashboard = () => {
+
     const { user } = useUser();
 
     return (
         <div className="dashboard-container">
+            <Navbar user={user} />
             <div className="dashboard-content">
                 <img src={logo} alt="Logo" className="dashboard-logo" />
                 <h1>Bienvenido, {user ? user.username : 'Usuario'}</h1>
@@ -19,5 +22,3 @@ const Dashboard = () => {
         </div>
     );
 };
-
-export default Dashboard;

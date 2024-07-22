@@ -3,18 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/image/thriveTogether.png';
 import './navbar.css';
 
-const Navbar = ({ user }) => {
+export const Navbar = ({ user }) => {
 
     const navigate = useNavigate();
 
     const handleLogout = () => {
-
+        
         localStorage.removeItem('user');
         navigate('/');
     };
 
     return (
-
         <nav className="navbar">
             <div className="navbar-left">
                 <img src={logo} alt="Logo" className="navbar-logo" />
@@ -33,4 +32,3 @@ const Navbar = ({ user }) => {
     );
 };
 
-export default Navbar;

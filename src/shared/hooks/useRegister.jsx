@@ -1,30 +1,28 @@
 import { useState } from 'react';
-import { login } from '../../services/api';
+import { registerUser } from '../../services/api';
 
-export const useLogin = () => {
+export const useRegister = () => {
 
     const [error, setError] = useState(null);
 
-    const loginHandler = async (data) => {
+    const register = async (data) => {
 
         try {
 
-            const response = await login(data);
+            const response = await registerUser(data);
             if (response.error) {
-
                 setError(response.e.message);
                 return false;
             } else {
-
-                console.log('Logged in successfully', response);
+                console.log('Registrado exitosamente', response);
                 return true;
             }
         } catch (e) {
-
+            
             setError(e.message);
             return false;
         }
     };
 
-    return { login: loginHandler, error };
+    return { register, error };
 };
