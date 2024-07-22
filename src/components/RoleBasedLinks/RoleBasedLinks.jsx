@@ -11,6 +11,7 @@ export const RoleBasedLinks = () => {
             <>
               <a href="#">Admin Dashboard</a>
               <a href="#">Admin Settings</a>
+              <a href="/dashboard/post">POST's</a>
               <div className="logout-container">
                 <input onClick={logout} type="button" value="Logout" />
               </div>

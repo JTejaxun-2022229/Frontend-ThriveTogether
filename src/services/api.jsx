@@ -1,24 +1,25 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:5100/thrive/v1',
+    baseURL: 'http://localhost:5100/thrive/v1',
     timeout: 5000
 })
 
 apiClient.interceptors.request.use(
     (config) => {
-        const userDetails = localStorage.getItem('user')
-
-        if (userDetails) {
-            const token = JSON.parse(userDetails).token
-            config.headers.Authorization = `Bearer ${token}`
-        }
-        return config
+      let token = localStorage.getItem('token');
+  
+      if (token) {
+        token = token.replace(/^"|"$/g, '');
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
     },
     (e) => {
-        return Promise.reject(e)
+      return Promise.reject(e);
     }
-)
+  );
+  
 
 export const login = async (data) => {
     try {
@@ -41,6 +42,22 @@ export const register = async (data) => {
         }
     }
 }
+
+export const authenticate = async (data) => {
+    try {
+        const response = await axios.put(
+            "https://api.chatengine.io/users/",
+            { username: data.email, secret: data.email, first_name: data.email },
+            { headers: { "private-key": "4a07a1a5-c960-4b64-969b-fa3c49e40635" } }
+        );
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            e
+        };
+    }
+};
 
 export const getUsers = async () => {
 
@@ -155,5 +172,29 @@ export const deleteNote = async (id) => {
             e
         }
     }
-
 };
+
+export const createPost = async (data) => {
+    try {
+      console.log(data);
+      return await apiClient.post('/post/newPost', data);
+    } catch (e) {
+      console.error("Error creating post:", e.response ? e.response.data : e.message);
+      return {
+        error: true,
+        e
+      };
+    }
+  };
+  
+  export const getPosts = async () => {
+    try {
+      return await apiClient.get('/post/getPost');
+    } catch (e) {
+      return {
+        error: true,
+        e
+      };
+    }
+  };
+

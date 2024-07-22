@@ -34,6 +34,7 @@ export const useUserDetails = () => {
 
   return {
     username: userDetails?.username || "Guest",
+    email: userDetails?.email || "Guest",
     role: userDetails?.role || "404NotFout",
     logout,
   };

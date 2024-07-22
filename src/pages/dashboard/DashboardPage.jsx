@@ -10,7 +10,7 @@ export const DashboardPage = () => {
 
   return (
     <div className="dashboard-container">
-      <Navbar user={username}/>
+      {<Navbar user={username}/>}
       <div className="content">
           <Outlet />
         </div>
