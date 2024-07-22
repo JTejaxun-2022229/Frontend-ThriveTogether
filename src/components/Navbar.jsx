@@ -16,11 +16,16 @@ export const Navbar = ({ user }) => {
           <div className="title-logo-container">
             <span>Thrive Together</span>
           </div>
-          </div>
+        </div>
+        <div className="navbar-center">
+          <button onClick={() => navigate("/dashboard/home")}>Home</button>
+          <button onClick={() => navigate("/dashboard/chat")}>Chat</button>
+          <button onClick={() => navigate("/dashboard/posts")}>Posts</button>
+        </div>
         <div className="navbar-right">
           <div className="dropdown">
             <button className="dropbtn">{user}</button>
-                <RoleBasedLinks/>
+            <RoleBasedLinks />
           </div>
         </div>
       </nav>
