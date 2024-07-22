@@ -1,167 +1,169 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRegister } from '../../shared/hooks/useRegister';
-import './auth.css';
-import logo from '../../assets/image/thriveTogether.png';
+import { Input } from './Input';
+import { registerValidationMessages, validateRegister } from '../shared/validators';
+import { useRegister } from '../shared/hooks';
+import logoThrive from '../assets/img/thriveTogether.png';
 
-export const Register = () => {
+export const Register = ({ switchAuthHandler }) => {
 
-    const { register, error } = useRegister();
+    const { registerUser, isLoading } = useRegister();
 
-    const [formData, setFormData] = useState({
-        name: '',
-        username: '',
-        email: '',
-        password: '',
-        description: '',
-        photo: '',
-        vices: [],
+    const [formState, setFormState] = useState({
+        name: { value: '', isValid: false, showError: false },
+        username: { value: '', isValid: false, showError: false },
+        email: { value: '', isValid: false, showError: false },
+        password: { value: '', isValid: false, showError: false },
+        description: { value: '', isValid: true, showError: false },
+        photo: { value: '', isValid: true, showError: false },
+        vices: { value: [], isValid: true, showError: false },
     });
-    const navigate = useNavigate();
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (value, field) => {
 
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormState((prevState) => ({
+            ...prevState,
+            [field]: {
+                ...prevState[field],
+                value,
+            },
+        }));
     };
 
-    const handleFileChange = async (e) => {
+    const handleValidationOnBlur = (value, field) => {
 
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'your_upload_preset'); // Reemplaza con tu configuración
-        
-        const response = await axios.post(
-            'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload',
-            formData
-        );
-        setFormData({ ...formData, photo: response.data.secure_url });
+        const isValid = validateRegister(field, value);
+        setFormState((prevState) => ({
+            ...prevState,
+            [field]: {
+                ...prevState[field],
+                isValid,
+                showError: !isValid,
+            },
+        }));
     };
 
-    const handleVicesChange = (e) => {
-        const { value, checked } = e.target;
-        setFormData((prevData) => {
-            const newVices = checked
-                ? [...prevData.vices, value]
-                : prevData.vices.filter((vice) => vice !== value);
-            return { ...prevData, vices: newVices };
+    const handleVicesToggle = (vice) => {
+
+        setFormState((prevState) => {
+            const newVices = prevState.vices.value.includes(vice)
+                ? prevState.vices.value.filter((v) => v !== vice)
+                : [...prevState.vices.value, vice];
+
+            return {
+                ...prevState,
+                vices: {
+                    ...prevState.vices,
+                    value: newVices,
+                },
+            };
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const success = await register(formData);
-        if (success) {
-            navigate('/dashboard');
-        }
+    const handleRegister = (event) => {
+        
+        event.preventDefault();
+        const userData = {
+            name: formState.name.value,
+            username: formState.username.value,
+            email: formState.email.value,
+            password: formState.password.value,
+            description: formState.description.value,
+            photo: formState.photo.value,
+            vices: formState.vices.value,
+        };
+
+        registerUser(userData);
     };
 
+    const isSubmitDisabled = isLoading || !Object.values(formState).every((field) => field.isValid);
+
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <img src={logo} alt="Logo" className="logo" />
-                <h1>Registrarse en Thrive Together</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Nombre"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="Nombre de usuario"
-                            value={formData.username}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Correo electrónico"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Contraseña"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <textarea
-                            name="description"
-                            placeholder="Descripción"
-                            value={formData.description}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input type="file" onChange={handleFileChange} />
-                    </div>
-                    <div className="form-group">
-                        <label>Vicios:</label>
+        <div className="register-container">
+            <div className="register-right">
+                <form className="auth-form">
+                    <div className="auth-logo-container">
+                        <img src={logoThrive} height={150} />
                         <div>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value="smoking"
-                                    onChange={handleVicesChange}
-                                />
-                                Fumar
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value="drinking"
-                                    onChange={handleVicesChange}
-                                />
-                                Beber
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value="gambling"
-                                    onChange={handleVicesChange}
-                                />
-                                Juegos de azar
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value="drugs"
-                                    onChange={handleVicesChange}
-                                />
-                                Drogas
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value="other"
-                                    onChange={handleVicesChange}
-                                />
-                                Otros
-                            </label>
+                            <h1>Thrive Together</h1>
                         </div>
                     </div>
-                    <button type="submit">Registrarse</button>
+                    <div className="logo-separator"></div>
+                    <Input
+                        field='name'
+                        label='Name'
+                        value={formState.name.value}
+                        onChangeHandler={handleInputChange}
+                        type='text'
+                        onBlurHandler={handleValidationOnBlur}
+                        showErrorMessage={formState.name.showError}
+                        validationMessage={registerValidationMessages.name}
+                    />
+                    <Input
+                        field='username'
+                        label='Username'
+                        value={formState.username.value}
+                        onChangeHandler={handleInputChange}
+                        type='text'
+                        onBlurHandler={handleValidationOnBlur}
+                        showErrorMessage={formState.username.showError}
+                        validationMessage={registerValidationMessages.username}
+                    />
+                    <Input
+                        field='email'
+                        label='Email'
+                        value={formState.email.value}
+                        onChangeHandler={handleInputChange}
+                        type='text'
+                        onBlurHandler={handleValidationOnBlur}
+                        showErrorMessage={formState.email.showError}
+                        validationMessage={registerValidationMessages.email}
+                    />
+                    <Input
+                        field='password'
+                        label='Password'
+                        value={formState.password.value}
+                        onChangeHandler={handleInputChange}
+                        type='password'
+                        onBlurHandler={handleValidationOnBlur}
+                        showErrorMessage={formState.password.showError}
+                        validationMessage={registerValidationMessages.password}
+                    />
+                    <Input
+                        field='description'
+                        label='Description'
+                        value={formState.description.value}
+                        onChangeHandler={handleInputChange}
+                        type='text'
+                    />
+                    <Input
+                        field='photo'
+                        label='Photo URL'
+                        value={formState.photo.value}
+                        onChangeHandler={handleInputChange}
+                        type='text'
+                    />
+                    <div className="vices-container">
+                        <label>Vices</label>
+                        <div className="vices-buttons">
+                            {['smoking', 'drinking', 'gambling', 'other'].map((vice) => (
+                                <button
+                                    type="button"
+                                    key={vice}
+                                    className={`vice-button ${formState.vices.value.includes(vice) ? 'active' : ''}`}
+                                    onClick={() => handleVicesToggle(vice)}
+                                >
+                                    {vice}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <button onClick={handleRegister} disabled={isSubmitDisabled}>
+                        Register
+                    </button>
                 </form>
-                {error && <p className="error">{error}</p>}
+                <span onClick={switchAuthHandler} className="auth-form-switch-label">
+                    ¿Ya tienes una cuenta? ¡Inicia sesión...!
+                </span>
             </div>
         </div>
     );

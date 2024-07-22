@@ -1,38 +1,23 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { register as registerRequest } from "../../services/api"
-import toast from "react-hot-toast"
+import { useState } from 'react';
+import { register as registerUserAPI } from '../../services/api';
 
 export const useRegister = () => {
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
-    const navigate = useNavigate()
+    const registerUser = async (userData) => {
 
-    const register = async (email, password, username) => {
-        setIsLoading(true)
+        setIsLoading(true);
+        try {
 
-        const response = await registerRequest({
-            email,
-            password,
-            username
-        })
-
-        setIsLoading(false)
-        if (response.error) {
-            return toast.error(
-                response.e?.response?.data || 'Ocurrió un error al iniciar sesión'
-            )
+            await registerUserAPI(userData);
+            setIsLoading(false);
+            
+        } catch (error) {
+            setIsLoading(false);
+            console.error('Registration failed:', error);
         }
+    };
 
-        const { userDetails } = response.data
-
-        localStorage.setItem('user', JSON.stringify(userDetails))
-
-        navigate('/')
-    }
-    return {
-        register,
-        isLoading
-    }
-}
+    return { registerUser, isLoading };
+};
